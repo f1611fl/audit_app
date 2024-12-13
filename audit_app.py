@@ -186,40 +186,41 @@ with cm00:
         if 'topic' in st.session_state:
             if st.session_state.topic:
                 if st.session_state.audit_mode=='Full Document':
-                    if st.button("Audit",key='fd_audit',type='primary',use_container_width=True):
-                        with cm01:
-                            with st.container(border=True):
-                                chunks=[]
-                                for r in wanted_resources:
-                                    chunks+=weaviate_search(
-                                        wc_client,
-                                        st.session_state.topic,
-                                        r
-                                    )
-                                text='\n'.join(chunks)
-                                non_confs=full_document_audit(
-                                        st.session_state.topic,
-                                        text,
-                                        st.session_state.docx_txt,
-                                        llm,
-                                        st.session_state.front_end_lang)
-                                for n in non_confs:
-                                    st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
-                                    colour={'YES':'green','NO':'red'}[n['conformity']]
-                                    st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
-                                    st.write(n['reason']) 
-                                    
-                                front_end_display['confirm']
-                                new_res={
-                                    'chapters':[{r:['Full Document']} for r in wanted_resources],
-                                    'non_conformities':[v['point'] for v in non_confs if v['conformity']=='NO'],
-                                    'result':non_confs
-                                }
-                                cc100,cc101=st.columns(2)
-                                with cc100:
-                                    st.button('OK',key='yb_fd',on_click=understood_button,args=(st.session_state.audit_results,new_res),type='primary',use_container_width=True)
-                                with cc101:
-                                    st.button('NO',key='no_fd',type='primary',use_container_width=True)
+                    if st.session_state.docx_txt:
+                        if st.button("Audit",key='fd_audit',type='primary',use_container_width=True):
+                            with cm01:
+                                with st.container(border=True):
+                                    chunks=[]
+                                    for r in wanted_resources:
+                                        chunks+=weaviate_search(
+                                            wc_client,
+                                            st.session_state.topic,
+                                            r
+                                        )
+                                    text='\n'.join(chunks)
+                                    non_confs=full_document_audit(
+                                            st.session_state.topic,
+                                            text,
+                                            st.session_state.docx_txt,
+                                            llm,
+                                            st.session_state.front_end_lang)
+                                    for n in non_confs:
+                                        st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
+                                        colour={'YES':'green','NO':'red'}[n['conformity']]
+                                        st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
+                                        st.write(n['reason']) 
+                                        
+                                    front_end_display['confirm']
+                                    new_res={
+                                        'chapters':[{r:['Full Document']} for r in wanted_resources],
+                                        'non_conformities':[v['point'] for v in non_confs if v['conformity']=='NO'],
+                                        'result':non_confs
+                                    }
+                                    cc100,cc101=st.columns(2)
+                                    with cc100:
+                                        st.button('OK',key='yb_fd',on_click=understood_button,args=(st.session_state.audit_results,new_res),type='primary',use_container_width=True)
+                                    with cc101:
+                                        st.button('NO',key='no_fd',type='primary',use_container_width=True)
 
                                 
                 else:
@@ -229,6 +230,8 @@ with cm00:
                         else:
                             go_on=False
                             break
+                    if not st.session_state.docx_txt:
+                        go_on=False
                     if go_on:
                         if st.button("Audit",key='fd_audit',type='primary',use_container_width=True):
                                 with cm01:
