@@ -1,6 +1,6 @@
 PyPDF2
 langdetect
-openai==0.28.0
+openai
 streamlit
 python-docx
 langchain==0.3.8
