@@ -112,12 +112,12 @@ def connect_wc(api_keys):
 
 def clean_weaviate(api_keys):
     wc_client=connect_wc(api_keys)
-    if wc_client.collections.exists('Paragraph'):
-        wc_client.collections.delete('Paragraph')
+    if wc_client.collections.exists('Docchunk'):
+        wc_client.collections.delete('Docchunk')
 
 
     wc_client.collections.create(
-        'Paragraph',
+        'Docchunk',
         vectorizer_config=Configure.Vectorizer.text2vec_openai(),
         properties=[
             Property(
@@ -154,7 +154,7 @@ def add_a_resource_weaviate(file,api_keys=api_keys):
                 is_separator_regex=False,
             )
             chunks = text_splitter.create_documents([v])
-            coll=wc_client.collections.get("Paragraph")
+            coll=wc_client.collections.get("Docchunk")
             for i in range(len(chunks)):
                 try:
                     coll.data.insert({
@@ -259,7 +259,7 @@ def sections(pdf_dict):
         return maps
 
 def weaviate_search(wc_client,topic,resource,chapters=None):
-    collection=wc_client.collections.get("Paragraph")
+    collection=wc_client.collections.get("Docchunk")
     if chapters:
         for c in chapters:
             response = collection.query.near_text(
