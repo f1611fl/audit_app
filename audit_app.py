@@ -102,7 +102,7 @@ with resources_management:
                 load_files(pdf_loader,st.session_state.api_keys)
             except:
                 st.warning(front_end_display['warning'])
-    if wc_client.collections.exists('Paragraph'):
+    if wc_client.collections.exists('Docchunk'):
         ch00,ch01,ch02=st.columns([1,3,1])
         with ch01:
             front_end_display['res_list']
