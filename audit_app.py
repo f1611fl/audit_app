@@ -106,7 +106,7 @@ with resources_management:
         ch00,ch01,ch02=st.columns([1,3,1])
         with ch01:
             front_end_display['res_list']
-        weaviate_collection=wc_client.collections.get('Paragraph')
+        weaviate_collection=wc_client.collections.get('Docchunk')
         resources_on_weaviate=list(set([item.properties['document_name'] for item in weaviate_collection.iterator()]))
         ch10,ch11,ch12=st.columns([5,1,2])
         for r in resources_on_weaviate:
@@ -181,7 +181,7 @@ with cm00:
         st.text_input(front_end_display['topic'],key='topic')
         if st.session_state.audit_mode=='Chapter':
             for r in wanted_resources:
-                chaps=list(sorted(set([w.properties['chapter'] for w in wc_client.collections.get("Paragraph").iterator() if w.properties['document_name']==r])))
+                chaps=list(sorted(set([w.properties['chapter'] for w in wc_client.collections.get("Docchunk").iterator() if w.properties['document_name']==r])))
                 st.multiselect(r,chaps,key=f'chapters_{r}',max_selections=3)
         if 'topic' in st.session_state:
             if st.session_state.topic:
