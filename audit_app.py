@@ -206,7 +206,7 @@ with cm00:
                                             st.session_state.front_end_lang)
                                     for n in non_confs:
                                         st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
-                                        colour={'YES':'green','NO':'red'}[n.get(['conformity'],'green')]
+                                        colour={'YES':'green','NO':'red'}[n.get('conformity','green')]
                                         st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
                                         st.write(n['reason']) 
                                         
