@@ -259,7 +259,7 @@ with cm00:
                                         }
                                         for n in non_confs:
                                             st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
-                                            colour={'YES':'green','NO':'red'}[n['conformity']]
+                                            colour={'YES':'green','NO':'red'}.get(n['conformity'],"red")
                                             st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
                                             st.write(n['reason'])                                        
                                         front_end_display['confirm']
