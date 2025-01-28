@@ -206,14 +206,14 @@ with cm00:
                                             st.session_state.front_end_lang)
                                     for n in non_confs:
                                         st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
-                                        colour={'YES':'green','NO':'red'}[n.get('conformity','green')]
-                                        st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
+                                        colour={'YES':'green','NO':'red'}[n.get('conformity','YES')]
+                                        st.markdown(f"status: :{colour}[{front_end_display['status'][n.get('conformity', 'NA')]}]")
                                         st.write(n['reason']) 
                                         
                                     front_end_display['confirm']
                                     new_res={
                                         'chapters':[{r:['Full Document']} for r in wanted_resources],
-                                        'non_conformities':[v['point'] for v in non_confs if v['conformity']=='NO'],
+                                        'non_conformities':[v['point'] for v in non_confs if v.get('conformity','YES')=='NO'],
                                         'result':non_confs
                                     }
                                     cc100,cc101=st.columns(2)
