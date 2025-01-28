@@ -207,13 +207,13 @@ with cm00:
                                     for n in non_confs:
                                         st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
                                         colour={'YES':'green','NO':'red'}[n.get('conformity','YES')]
-                                        st.markdown(f"status: :{colour}[{front_end_display['status'][n.get('conformity', 'NA')]}]")
+                                        st.markdown(f"status: :{colour}[{front_end_display['status'][n.get('conformity', 'YES')]}]")
                                         st.write(n['reason']) 
                                         
                                     front_end_display['confirm']
                                     new_res={
                                         'chapters':[{r:['Full Document']} for r in wanted_resources],
-                                        'non_conformities':[v['point'] for v in non_confs if v.get('conformity','YES')=='NO'],
+                                        'non_conformities':[v['point'] for v in non_confs if v.get('conformity','NA')=='NO'],
                                         'result':non_confs
                                     }
                                     cc100,cc101=st.columns(2)
@@ -254,13 +254,13 @@ with cm00:
                                         
                                         new_res={
                                             'chapters':[{r:st.session_state[f'chapters_{r}']} for r in wanted_resources],
-                                            'non_conformities':[v['point'] for v in non_confs if v['conformity']=='NO'],
+                                            'non_conformities':[v['point'] for v in non_confs if v.get('conformity','NA')=='NO'],
                                             'result':non_confs
                                         }
                                         for n in non_confs:
                                             st.markdown(f"""<p class="big-font">{n['point']}</p>""", unsafe_allow_html=True)
-                                            colour={'YES':'green','NO':'red'}.get(n['conformity'],"red")
-                                            st.markdown(f"status: :{colour}[{front_end_display['status'][n['conformity']]}]")
+                                            colour={'YES':'green','NO':'red'}[n.get(n'conformity',"NO")]
+                                            st.markdown(f"status: :{colour}[{front_end_display['status'][n.get('conformity','NO')]}]")
                                             st.write(n['reason'])                                        
                                         front_end_display['confirm']
                                         cc100,cc101=st.columns(2)
