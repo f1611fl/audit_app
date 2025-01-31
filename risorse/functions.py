@@ -303,7 +303,7 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
     #print(norm_list)
 
     non_conformities=[]
-    for point in norm_list:
+    for k,point in norm_dict.items():
         #If the point is NOT addressed, state that the point is not addressed and WHY.
         #Otherwise, state that it is addressed and if necessary output a judgment of how the point could be addressed better and WHY.
         gap_prompt=f"""You will be given a procedure and you have to check if the matter of {point} is addressed properly or not by the procedure.
@@ -311,7 +311,7 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
             {doc_text}.
         Output a JSON object with the following structure:
         - output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
-        - reason: The reason of the output, basically why it is addressed or not and how to better it according to the norm, in {lang}.
+        - reason: The reason of the output, basically why it is addressed or not and how to better address it according to the norm, in {lang}.
         - conformity: YES if the output is positive, NO if the output is negative.
         
         Make sure the text is in {lang}"""
