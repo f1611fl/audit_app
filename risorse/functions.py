@@ -311,7 +311,7 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
             {doc_text}.
         Output a JSON object with the following structure:
         - output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
-        - reason: The reason of the output, basically why it is addressed or not and how to better it if it is the case, in {lang}.
+        - reason: The reason of the output, basically why it is addressed or not and how to better it according to the norm, in {lang}.
         - conformity: YES if the output is positive, NO if the output is negative.
         
         Make sure the text is in {lang}"""
