@@ -307,11 +307,17 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
         #If the point is NOT addressed, state that the point is not addressed and WHY.
         #Otherwise, state that it is addressed and if necessary output a judgment of how the point could be addressed better and WHY.
         gap_prompt=f"""You will be given a procedure and you have to check if the matter of {point} is addressed properly or not by the procedure.
+            The point is:
+                <point>
+                    {point}
+                </point>
             The procedure is:
-            {doc_text}.
+                <procedure>
+                    {doc_text}
+                </procedure>
         Output a JSON object with the following structure:
         - output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
-        - reason: The reason of the output, basically why it is addressed or not and how to better address it according to the norm, in {lang}.
+        - reason: The reason of the output, basically why it is either addressed or not and suggestions on how to better address the point according to the norm, in {lang}.
         - conformity: YES if the output is positive, NO if the output is negative.
         
         Make sure the text is in {lang}"""
