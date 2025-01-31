@@ -316,11 +316,12 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
                     {doc_text}
                 </procedure>
         Output a JSON object with the following structure:
-        - output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
+        
         - reason: The reason of the output, basically why it is either addressed or not and suggestions on how to better address the point according to the norm, in {lang}.
         - conformity: YES if the output is positive, NO if the output is negative.
         
         Make sure the text is in {lang}"""
+        #- output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
         llm.model_kwargs['response_format']={'type': 'json_object'}
         results = json.loads(llm.predict(gap_prompt))
         llm.model_kwargs.pop('response_format', None)
