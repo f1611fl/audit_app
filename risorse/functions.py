@@ -282,6 +282,7 @@ def weaviate_search(wc_client,topic,resource,chapters=None):
 def full_document_audit(request,important_text,doc_text,llm,lang='en'):
     if lang=='eml':
         lang='it'
+    language = {'en':'English','it':'Italian'}
     request_topic=llm.predict(f"Given a {request}, extract the global topic of the request. Output the global topic and nothing more, in the original language of the question")
     norm_prompt=f"""Given a norm text, generate a list of points to be addressed to be compliant with said.
     The norm you need to analyse is:
@@ -317,10 +318,10 @@ def full_document_audit(request,important_text,doc_text,llm,lang='en'):
                 </procedure>
         Output a JSON object with the following structure:
         
-        - reason: The reason of the output, basically why it is either addressed or not and suggestions on how to better address the point according to the norm, in {lang}.
+        - reason: The reason of the output, basically why it is either addressed or not and suggestions on how to better address the point according to the norm, in {language[lang]}.
         - conformity: YES if the output is positive, NO if the output is negative.
         
-        Make sure the text is in {lang}"""
+        Make sure the text is in {language[lang]}"""
         #- output: A judgement wheter the point is addressed, not addressed properly or not addressed at all.
         llm.model_kwargs['response_format']={'type': 'json_object'}
         results = json.loads(llm.predict(gap_prompt))
